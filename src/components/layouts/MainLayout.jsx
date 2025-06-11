@@ -1,14 +1,33 @@
-import React from 'react';
-import TopBar from './TopBar'; 
+import React, { useState, useEffect } from 'react';
+import TopBar from './TopBar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 const MainLayout = ({ children }) => {
+  // const [isScrolled, setIsScrolled] = useState(false);
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     // Si el scroll es mayor a 50px, cambiamos el estado
+  //     setIsScrolled(window.scrollY > 50);
+  //   };
+
+  //   // Agregamos el listener
+  //   window.addEventListener('scroll', handleScroll);
+
+  //   // Limpiamos el listener cuando el componente se desmonta
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
+
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-       <TopBar />
-      <Navbar />
-      <main className="flex-grow container mx-auto">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+      <TopBar />
+      {/* Pasamos el estado 'isScrolled' al Navbar */}
+      <Navbar/>
+      {/* Eliminamos las clases 'container' y 'mx-auto' de aquí */}
+      <main className="flex-grow">
         {children}
       </main>
       <Footer />

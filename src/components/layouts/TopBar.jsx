@@ -1,32 +1,48 @@
-import React from 'react';
-import { FiMapPin } from 'react-icons/fi'; // Cambiamos el ícono a uno más apropiado para sedes
+import React from "react";
+import { FiMapPin } from "react-icons/fi";
+import Marquee from "react-fast-marquee";
 
 const TopBar = () => {
+  // El mensaje ahora no necesita el duplicado manual, aunque ayuda para un espaciado consistente.
+  const message =
+    "Selecciona tu sede más cercana para ver el catálogo completo ・ ¡Realizamos envíos en menos de 12 horas después de tu pedido y te ofrecemos recogida en bodega!";
+
   return (
-    <div className="bg-primary dark:bg-gray-800 text-white transition-colors duration-300">
-      <div className="container mx-auto px-4 py-2 flex items-center justify-center sm:justify-between">
-        
-        {/* Mensaje de bienvenida con el nuevo ícono */}
-        <div className="hidden sm:flex items-center gap-2 text-sm text-sky-100 dark:text-gray-400">
-          <FiMapPin />
-          <span>Nuestras Sedes</span>
-        </div>
+    <div className="bg-emerald-700 dark:bg-emerald-900 text-white transition-colors duration-300 h-[40px] flex items-center justify-between gap-6">
+      {/* Parte Izquierda: El banner usando react-fast-marquee */}
+      <div className="flex-1 overflow-hidden">
+        {/* 2. Usa el componente Marquee en lugar de divs con clases de animación */}
+        <Marquee speed={30} gradient={false} pauseOnHover={true} >
+          {/* El componente se encarga de clonar el contenido para un bucle perfecto */}
+          <span className="text-sm font-medium text-emerald-100 mx-8">
+            {message}
+          </span>
+        </Marquee>
+      </div>
 
-        {/* Enlaces de las Sedes (ACTUALIZADO) */}
-        <div className="flex items-center gap-6 text-sm font-medium">
-          <a href="/sede/bogota" className="text-white hover:text-sky-200 dark:hover:text-white transition-colors">
-            Bogotá
-          </a>
-          <a href="/sede/medellin" className="text-white hover:text-sky-200 dark:hover:text-white transition-colors">
-            Medellín
-          </a>
-          <a href="/sede/bucaramanga" className="text-white hover:text-sky-200 dark:hover:text-white transition-colors">
-            Bucaramanga
-          </a>
-        </div>
-
-        {/* Espacio vacío para balancear en pantallas grandes */}
-        <div className="hidden sm:flex" />
+      {/* Parte Derecha: Enlaces de selección de sede (sin cambios) */}
+      <div className="hidden sm:flex items-center gap-4 text-sm font-medium shrink-0 pr-4 sm:pr-6 lg:pr-8">
+        <span className="text-emerald-200 hidden lg:flex items-center gap-2">
+          <FiMapPin /> Sedes:
+        </span>
+        <a
+          href="/sede/bogota"
+          className="text-white font-semibold hover:text-emerald-200 transition-colors"
+        >
+          Bogotá
+        </a>
+        <a
+          href="/sede/medellin"
+          className="text-white font-semibold hover:text-emerald-200 transition-colors"
+        >
+          Medellín
+        </a>
+        <a
+          href="/sede/bucaramanga"
+          className="text-white font-semibold hover:text-emerald-200 transition-colors"
+        >
+          Bucaramanga
+        </a>
       </div>
     </div>
   );
