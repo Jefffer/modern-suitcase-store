@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TopBar from './TopBar';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import WhatsAppButton from '../ui/WhatsAppButton';
 
 const MainLayout = ({ children }) => {
   // const [isScrolled, setIsScrolled] = useState(false);
@@ -31,6 +32,7 @@ const MainLayout = ({ children }) => {
         {children}
       </main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
