@@ -8,18 +8,14 @@ const Navbar = () => {
   const itemCount = 0; // Placeholder
 
   return (
-    <header className="shadow-md bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 transition-colors duration-300">
+    <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 transition-colors duration-300 border-b border-gray-200 dark:border-gray-800">
       <nav className="container mx-auto px-4 py-3 flex justify-between items-center gap-4">
-        {/* Logo y Sedes */}
-        <div className="flex items-center gap-6">
+        {/* Logo */}
+        <div className="flex items-center">
           <h1 className="text-2xl font-bold text-primary dark:text-primary-dark shrink-0">
             Maletas Universal
           </h1>
-          <div className="hidden lg:flex gap-6 items-center">
-            <a href="/sede-bogota" className="text-sm font-medium hover:text-primary transition-colors">Bogotá</a>
-            <a href="/sede-medellin" className="text-sm font-medium hover:text-primary transition-colors">Medellín</a>
-            <a href="/sede-cali" className="text-sm font-medium hover:text-primary transition-colors">Cali</a>
-          </div>
+          {/* El DIV que contenía los enlaces a las sedes ha sido eliminado */}
         </div>
 
         {/* Buscador Central */}
