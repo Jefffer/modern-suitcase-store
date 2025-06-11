@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiShoppingCart, FiSun, FiMoon, FiSearch } from "react-icons/fi";
 import { useTheme } from "../../context/ThemeContext";
+import logo from '../../assets/images/logo.jpg';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -24,16 +25,16 @@ const Navbar = () => {
     : "border-b border-transparent bg-transparent hover:bg-white/90 dark:hover:bg-slate-900/90 hover:backdrop-blur-sm hover:border-slate-200 dark:hover:border-slate-800";
 
   // --- LÓGICA DE COLOR PARA TEXTO Y LOGO ---
-  let logoColor;
+  let logoTextColor;
   if (isScrolled) {
     // En scroll, usamos los colores primarios de la marca.
-    logoColor = "text-primary dark:text-primary-dark";
+    logoTextColor = "text-primary dark:text-primary-dark";
   } else {
     // Sobre la imagen, el logo es claro.
-    logoColor = "text-slate-100";
+    logoTextColor = "text-slate-100";
     // SOLO en modo claro, al hacer hover, el logo vuelve a su color primario para contrastar con el fondo blanco.
     if (theme === "light") {
-      logoColor += " group-hover:text-primary";
+      logoTextColor += " group-hover:text-primary";
     }
   }
 
@@ -51,63 +52,63 @@ const Navbar = () => {
     }
   }
 
-  // --- LÓGICA DE ESTILO PARA LOS ENLACES DE NAVEGACIÓN ---
+  // Clases base para los enlaces, incluyendo el borde transparente para el efecto hover
+  const navLinkBaseClasses = 'flex items-center border-b-4 text-base font-medium transition-colors duration-300 px-2';
+  
+  // Clases de color para enlaces normales
   let navLinkColor;
   if (isScrolled) {
-    // Cuando hay scroll, los enlaces tienen color de texto normal y cambian a primario en hover
-    navLinkColor =
-      "text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary-dark";
+    navLinkColor = 'border-transparent text-slate-600 hover:border-primary-light hover:text-primary dark:text-slate-300 dark:hover:border-primary-dark dark:hover:text-primary-dark';
   } else {
-    // Sobre la imagen, los enlaces son claros
-    navLinkColor = "text-slate-200 hover:text-white";
-    // Y solo en modo claro, se oscurecen cuando el fondo del navbar aparece
-    if (theme === "light") {
-      navLinkColor +=
-        " group-hover:text-slate-600 group-hover:hover:text-primary";
+    navLinkColor = 'border-transparent text-slate-200 hover:border-sky-300 hover:text-white';
+    if (theme === 'light') {
+      navLinkColor += ' group-hover:text-slate-600 group-hover:hover:text-primary group-hover:hover:border-primary-light';
+    }
+  }
+  
+  // Clases de color para el enlace de "Ofertas" resaltado
+  let offerLinkColor;
+  if (isScrolled) {
+    offerLinkColor = 'border-transparent text-amber-500 hover:border-amber-500 dark:text-amber-400 dark:hover:border-amber-400';
+  } else {
+    offerLinkColor = 'border-transparent text-amber-400 hover:border-amber-500 hover:text-amber-500';
+    if (theme === 'light') {
+      offerLinkColor += ' group-hover:text-amber-500 group-hover:hover:border-amber-500';
     }
   }
 
   return (
     // Añadimos la clase 'group' para habilitar 'group-hover' en los elementos hijos.
     <header
-      className={`group w-full z-50 transition-all duration-300 ${positionClasses} ${backgroundClasses}`}
+      className={`group w-full h-16 z-50 transition-all duration-300 ${positionClasses} ${backgroundClasses}`}
     >
-      <nav className="w-full px-4 sm:px-6 lg:px-8 mx-auto py-3 flex justify-between items-center">
-        <div className="flex items-center gap-10">
-          {/* Logo con clases de color dinámicas */}
-          <a
-            href="/"
-            className={`text-2xl font-bold shrink-0 transition-colors duration-300 ${logoColor}`}
-          >
-            Maletas Universal
+      <nav className="w-full h-full px-4 sm:px-6 lg:px-8 mx-auto flex justify-between items-center">
+        <div className="flex items-center gap-5 h-full">
+          <a href="/" className="flex items-center gap-3">
+            {/* Logo circular */}
+            <img 
+              src={logo} 
+              alt="Maletas Universal Logo" 
+              className="h-11 w-11 rounded-full border-2 border-white/50 object-cover" 
+            />
+            {/* Nombre en dos líneas con la nueva fuente */}
+            <div className="flex flex-col leading-tight">
+              <span className={`font-display text-xl transition-colors duration-300 ${logoTextColor}`}>
+                Maletas
+              </span>
+              <span className="font-display text-lg font-medium text-slate-400 -mt-1">
+                Universal
+              </span>
+            </div>
           </a>
 
-          {/* Enlaces de Navegación (ocultos en pantallas pequeñas) */}
-          <div className="hidden md:flex items-center gap-8">
-            <a
-              href="/catalogo"
-              className={`text-sm font-medium transition-colors duration-300 ${navLinkColor}`}
-            >
-              Catálogo
-            </a>
-            <a
-              href="/ofertas"
-              className={`text-sm font-medium transition-colors duration-300 ${navLinkColor}`}
-            >
-              Ofertas
-            </a>
-            <a
-              href="/nosotros"
-              className={`text-sm font-medium transition-colors duration-300 ${navLinkColor}`}
-            >
-              Nosotros
-            </a>
-            <a
-              href="/contacto"
-              className={`text-sm font-medium transition-colors duration-300 ${navLinkColor}`}
-            >
-              Contacto
-            </a>
+          {/* Enlaces de Navegación. 'items-stretch' en el nav padre permite que los hijos ocupen toda la altura */}
+          <div className="hidden md:flex items-center h-full gap-4">
+            <a href="/catalogo" className={`${navLinkBaseClasses} ${navLinkColor} h-full ml-4`}>Catálogo</a>
+            <a href="/ofertas" className={`${navLinkBaseClasses} ${offerLinkColor} h-full`}>Ofertas</a>
+            <a href="/nosotros" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Nosotros</a>
+            <a href="/contacto" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Contacto</a>
+            <a href="/giftcard" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Giftcard</a>
           </div>
         </div>
 
@@ -132,11 +133,13 @@ const Navbar = () => {
               onClick={toggleTheme}
               className={`p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-300 ${iconColor}`}
               aria-label="Toggle theme"
+              title="Cambiar tema"
             >
               {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
             </button>
             <button
               className={`relative p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-300 ${iconColor}`}
+              title="Ver Carrito de compras"
             >
               <FiShoppingCart size={22} />
               {itemCount > 0 && (

@@ -12,6 +12,7 @@ export default {
       // Definimos la fuente 'Inter' como la principal para 'sans-serif'
       fontFamily: {
         sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
+        display: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
       },
       colors: {
         primary: {
