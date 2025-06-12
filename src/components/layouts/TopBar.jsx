@@ -5,14 +5,14 @@ import Marquee from "react-fast-marquee";
 const TopBar = () => {
   // El mensaje ahora no necesita el duplicado manual, aunque ayuda para un espaciado consistente.
   const message =
-    "Selecciona tu sede más cercana para ver el catálogo completo ・ ¡Realizamos envíos en menos de 12 horas después de tu pedido y te ofrecemos recogida en bodega!";
+    "Selecciona tu sede más cercana para ver el catálogo completo ・ ¡Realizamos envíos en menos de 12 horas después de tu pedido ・ Envío gratis a partir de $200.000 ・ Ofrecemos recogida en bodega completamente gratis";
 
   return (
     <div className="bg-emerald-700 dark:bg-emerald-900 text-white transition-colors duration-300 h-[40px] flex items-center justify-between gap-6">
       {/* Parte Izquierda: El banner usando react-fast-marquee */}
       <div className="flex-1 overflow-hidden">
         {/* 2. Usa el componente Marquee en lugar de divs con clases de animación */}
-        <Marquee speed={30} gradient={false} pauseOnHover={true} >
+        <Marquee speed={35} gradient={false} pauseOnHover={true} >
           {/* El componente se encarga de clonar el contenido para un bucle perfecto */}
           <span className="text-sm font-medium text-emerald-100 mx-8">
             {message}
@@ -31,12 +31,14 @@ const TopBar = () => {
         >
           Bogotá
         </a>
+        |
         <a
           href="/sede/medellin"
           className="text-white font-semibold hover:text-emerald-200 transition-colors"
         >
           Medellín
         </a>
+        |
         <a
           href="/sede/bucaramanga"
           className="text-white font-semibold hover:text-emerald-200 transition-colors"

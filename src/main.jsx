@@ -7,6 +7,7 @@ import App from "./App.jsx";
 import { ThemeProvider } from "./context/ThemeContext";
 import '@fontsource-variable/inter';
 import '@fontsource/playfair-display';
+import '@fontsource-variable/montserrat'; 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

@@ -1,11 +1,27 @@
 // src/components/home/HeroSection.jsx
 import React from 'react';
+import { motion } from 'framer-motion';
 import HeroBackground from '../../assets/images/hero.jpg';
-import { FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight, FiChevronDown } from 'react-icons/fi';
+import { LiaLongArrowAltDownSolid } from "react-icons/lia";
+
 
 const HeroSection = () => {
+    // Handler para hacer scroll suave al siguiente contenido
+  const handleScrollDown = () => {
+    const hero = document.getElementById('hero-section');
+    if (hero) {
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      window.scrollTo({
+        top: heroBottom,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <section 
+    id="hero-section" 
       // Cambiamos a 'h-screen' para que ocupe toda la altura de la ventana
       className="relative h-screen min-h-[600px] flex items-center justify-center text-white"
       style={{ backgroundImage: `url(${HeroBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
@@ -28,6 +44,25 @@ const HeroSection = () => {
           Ver Catálogo
           <FiArrowRight />
         </a>
+         {/* Flecha animada */}
+        <div className="flex justify-center mt-20">
+          <motion.div
+            animate={{ y: [0, 18, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: [0.68, -0.55, 0.27, 1.55] }}
+          >
+            <button
+              onClick={handleScrollDown}
+              aria-label="Desplázate hacia abajo"
+              className="focus:outline-none"
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+            >
+              <LiaLongArrowAltDownSolid 
+                size={38} 
+                className="text-white"
+              />
+            </button>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
