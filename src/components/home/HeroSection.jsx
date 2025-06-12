@@ -53,12 +53,12 @@ const HeroSection = () => {
             <button
               onClick={handleScrollDown}
               aria-label="Desplázate hacia abajo"
-              className="focus:outline-none"
+              className="focus:outline-none hover:scale-150 transition-transform duration-300"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
             >
               <LiaLongArrowAltDownSolid 
                 size={38} 
-                className="text-white"
+                className="text-slate-200"
               />
             </button>
           </motion.div>
