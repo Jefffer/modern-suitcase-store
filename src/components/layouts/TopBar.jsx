@@ -5,7 +5,7 @@ import Marquee from "react-fast-marquee";
 const TopBar = () => {
   // El mensaje ahora no necesita el duplicado manual, aunque ayuda para un espaciado consistente.
   const message =
-    "Selecciona tu sede más cercana para ver el catálogo ・ ¡Realizamos envíos en menos de 12 horas después de tu pedido ・ Envío gratis a partir de $200.000 ・ Ofrecemos recogida en bodega completamente gratis";
+    "Selecciona tu sede más cercana para ver el catálogo ・ ¡Realizamos envíos en menos de 12 horas después de tu pedido ・ Envío gratis a partir de $200.000 ・ Ofrecemos recogida en bodega completamente gratis ・ Servicio Contraentrega";
 
   return (
     <div className="bg-emerald-700 dark:bg-emerald-900 text-white transition-colors duration-300 h-[40px] flex items-center justify-between gap-6">

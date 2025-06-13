@@ -105,7 +105,7 @@ const Navbar = () => {
           {/* Enlaces de Navegación. 'items-stretch' en el nav padre permite que los hijos ocupen toda la altura */}
           <div className="hidden md:flex items-center h-full gap-4">
             <a href="/catalogo" className={`${navLinkBaseClasses} ${navLinkColor} h-full ml-4`}>Catálogo</a>
-            <a href="/ofertas" className={`${navLinkBaseClasses} ${offerLinkColor} h-full`}>Ofertas</a>
+            <a href="/ofertas" className={`${navLinkBaseClasses} ${offerLinkColor} h-full`}>Ofertas 🔥</a>
             <a href="/nosotros" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Nosotros</a>
             <a href="/contacto" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Contacto</a>
             <a href="/giftcard" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Giftcard</a>
