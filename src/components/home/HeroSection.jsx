@@ -57,7 +57,7 @@ const HeroSection = () => {
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
             >
               <LiaLongArrowAltDownSolid 
-                size={38} 
+                size={60} 
                 className="text-slate-200"
               />
             </button>

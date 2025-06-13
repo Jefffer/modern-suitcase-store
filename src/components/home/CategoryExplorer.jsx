@@ -7,258 +7,139 @@ import category3 from "../../assets/images/category3.jpg";
 import category4 from "../../assets/images/category12.jpg";
 import category5 from "../../assets/images/category13.jpg";
 
-// Emojis para cada categoría
-const categoryEmojis = [
-  "💎", // Policarbonato
-  "🧵", // Palwonn
-  "💧", // Airza
-  "🛡️", // Alto Impacto
-  "🎒", // Accesorios
-];
-
 const categories = [
   {
     name: "Policarbonato",
     slug: "policarbonato",
-    description: "Ligereza, brillo y una resistencia superior a los impactos.",
+    description: "Brillo y resistencia superior al impacto.",
     imageUrl: category1,
+    emoji: "💎",
+    gridClass: "lg:col-span-2 lg:row-span-2", // Tarjeta principal, más grande
   },
   {
     name: "Alto Impacto",
     slug: "alto-impacto",
-    description:
-      "Polipropileno flexible y robusto, diseñado para absorber golpes.",
+    description: "Polipropileno flexible para absorber golpes.",
     imageUrl: category4,
+    emoji: "🛡️",
+    gridClass: "lg:row-span-2", // Tarjeta alta
   },
   {
-      name: "Airza",
-      slug: "airza",
-      description:
-      "Tejido de poliéster impermeable que protege tus pertenencias de la lluvia.",
-      imageUrl: category3,
-    },
-    {
-      name: "Accesorios",
-      slug: "accesorios",
-      description:
-        "Complementos esenciales para tu viaje, desde organizadores hasta etiquetas de equipaje.",
-      imageUrl: category5,
-    },
-    {
-      name: "Palwonn",
-      slug: "palwonn",
-      description:
-        "Poliéster de alta durabilidad para resistir las aventuras más exigentes.",
-      imageUrl: category2,
-    },
+    name: "Airza",
+    slug: "airza",
+    description: "Tejido impermeable que protege de la lluvia.",
+    imageUrl: category3,
+    emoji: "💧",
+    gridClass: "lg:row-span-3", // La tarjeta más alta
+  },
+  {
+    name: "Accesorios",
+    slug: "accesorios",
+    description: "Complementos esenciales para tu viaje.",
+    imageUrl: category5,
+    emoji: "🎒",
+    gridClass: "lg:col-span-1", // Tarjeta horizontal pequeña
+  },
+  {
+    name: "Palwonn",
+    slug: "palwonn",
+    description: "Poliéster de alta durabilidad y aventura.",
+    imageUrl: category2,
+    emoji: "🧵",
+    gridClass: "lg:col-span-2", // Tarjeta horizontal ancha
+  },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 50, damping: 15 },
+  },
+};
+
+// Componente de tarjeta reutilizable y mejorado
+const CategoryCard = ({ category }) => (
+  <motion.a
+    href={`/catalogo?categoria=${category.slug}`}
+    className={`group relative rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-end min-h-[280px] md:min-h-[320px] ${category.gridClass}`}
+    variants={cardVariants}
+    transition={{ duration: 0.5 }}
+  >
+    {/* Imagen de fondo con efecto de hover */}
+    <img
+      src={category.imageUrl}
+      alt={`Maletas de ${category.name}`}
+      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+      loading="lazy"
+    />
+    {/* Overlay degradado para legibilidad */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+    {/* Contenedor de texto y emoji */}
+    <div className="relative z-10 p-6 text-white w-full">
+      {/* Emoji animado: la animación ahora se activa con group-hover */}
+      <motion.div
+        className="text-5xl mb-3 drop-shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:rotate-12"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 10, delay: 0.2 }}
+      >
+        {category.emoji}
+      </motion.div>
+      
+      <h3 className="text-3xl font-display font-bold leading-tight tracking-tight">
+        {category.name}
+      </h3>
+      <p className="text-lg text-slate-200/95 mt-1 max-w-xs">{category.description}</p>
+      
+      {/* Indicador 'Explorar' que aparece en hover */}
+      <div className="mt-4 flex items-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="font-semibold">Explorar</span>
+        <FiArrowRight />
+      </div>
+    </div>
+  </motion.a>
+);
+
 const CategoryExplorer = () => {
-  // Variantes de animación personalizadas para cada tarjeta
-  const cardVariants = {
-    card1: { hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0 } },
-    card2: { hidden: { opacity: 0, y: -50 }, visible: { opacity: 1, y: 0 } },
-    card3: { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } },
-    card4: { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0 } },
-    card5: {
-      hidden: { opacity: 0, scale: 0.8 },
-      visible: { opacity: 1, scale: 1 },
-    },
-  };
-
-  const transition = { type: "spring", stiffness: 50, duration: 0.8 };
-
   return (
-    <section className="min-h-screen w-full flex flex-col justify-center bg-slate-50 dark:bg-slate-900 py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-<div className="text-center mb-16">
+    <section className="min-h-screen w-full flex flex-col justify-center bg-slate-50 dark:bg-slate-900 py-20 px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-16 max-w-3xl mx-auto">
         <motion.h2
           className="text-4xl font-display font-extrabold text-slate-800 dark:text-white sm:text-5xl"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.7 }}
         >
-          Explora por Categorías
+          Un Material para Cada Aventura
         </motion.h2>
         <motion.p
-          className="mt-4 max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300"
+          className="mt-4 text-lg text-slate-600 dark:text-slate-300"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
         >
-          Cada material ofrece una ventaja única.{" "}
-          <span className="font-semibold text-primary">¡Descubre el tuyo!</span>
+          Cada colección está diseñada con un propósito. Encuentra la tuya y prepárate para el despegue.
         </motion.p>
       </div>
 
-      {/* --- Contenedor del Collage (CSS GRID) --- */}
-      {/*
-        En mobile: un stack vertical simple (grid-cols-1)
-        En desktop (lg): un grid complejo de 4 columnas y 3 filas para el efecto collage.
-      */}
+      {/* --- Contenedor del Collage (CSS GRID Responsivo) --- */}
       <motion.div
-        className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3 gap-6 h-[80vh] min-h-[900px] lg:min-h-[700px]"
+        className="w-full mx-auto grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-3 gap-6 auto-rows-[280px]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ staggerChildren: 0.15 }}
+        transition={{ staggerChildren: 0.1 }}
       >
-        {/* --- TARJETA 1: POLICARBONATO (Ocupa más espacio vertical) --- */}
-        <motion.a
-          href={`/catalogo?categoria=${categories[0].slug}`}
-          className="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-xl"
-          variants={cardVariants.card1}
-          transition={transition}
-        >
-          <img
-            src={categories[0].imageUrl}
-            alt={categories[0].name}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-          <motion.div
-            className="absolute top-6 left-6 z-20 text-[2.5rem] drop-shadow-lg select-none"
-            initial={{ scale: 0.7, rotate: -10, opacity: 0 }}
-            animate={{ scale: 1.1, rotate: 0, opacity: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 12,
-              delay: 0.2,
-            }}
-            whileHover={{ scale: 1.25, rotate: 8 }}
-          >
-            💎
-          </motion.div>
-          <div className="relative h-full flex flex-col justify-end p-8 text-white">
-            <h3 className="text-4xl font-display font-bold">
-              {categories[0].name}
-            </h3>
-            <p className="mt-2 text-lg text-slate-200">
-              {categories[0].description}
-            </p>
-          </div>
-        </motion.a>
-
-        {/* --- TARJETA 2: Alto Impacto (Texto afuera, debajo de la imagen) --- */}
-        <motion.a
-          href={`/catalogo?categoria=${categories[1].slug}`}
-          className="group lg:col-start-3 lg:row-span-2 rounded-2xl overflow-hidden shadow-xl flex flex-col bg-white dark:bg-slate-900"
-          variants={cardVariants.card2}
-          transition={transition}
-        >
-          <div className="h-2/3 overflow-hidden">
-            <img
-              src={categories[1].imageUrl}
-              alt={categories[1].name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          </div>
-          
-          <div className="h-1/3 p-6 flex flex-col justify-center">
-            <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-white">
-              {categories[1].name}
-            </h3>
-            <p className="mt-1 text-slate-600 dark:text-slate-300">
-              {categories[1].description}
-            </p>
-          </div>
-        </motion.a>
-
-        {/* --- TARJETA 3: AIRZA (Texto afuera, encima de la imagen) --- */}
-        <motion.a
-          href={`/catalogo?categoria=${categories[2].slug}`}
-          className="group lg:col-span-1 lg:col-start-4 lg:row-span-3 rounded-2xl overflow-hidden shadow-xl flex flex-col bg-primary dark:bg-primary-dark"
-          variants={cardVariants.card4}
-          transition={transition}
-        >
-          <div className="p-6 text-white h-1/4">
-            <h3 className="text-2xl font-display font-bold">
-              {categories[2].name}
-            </h3>
-            <p className="mt-1 opacity-80">{categories[2].description}</p>
-          </div>
-          
-          <div className="h-3/4 overflow-hidden">
-            <img
-              src={categories[2].imageUrl}
-              alt={categories[2].name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
-        </motion.a>
-
-        {/* --- TARJETA 4: ACCESORIOS (Ocupa espacio horizontal) --- */}
-        <motion.a
-          href={`/catalogo?categoria=${categories[3].slug}`}
-          className="group relative lg:col-span-1 lg:row-start-3 rounded-2xl overflow-hidden shadow-xl"
-          variants={cardVariants.card3}
-          transition={transition}
-        >
-          <img
-            src={categories[3].imageUrl}
-            alt={categories[3].name}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-125"
-          />
-          <div className="absolute inset-0 bg-black/60">
-          <motion.div
-            className="absolute top-6 left-6 z-20 text-[2.5rem] drop-shadow-lg select-none"
-            initial={{ scale: 0.7, rotate: -10, opacity: 0 }}
-            animate={{ scale: 1.1, rotate: 0, opacity: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 12,
-              delay: 0.2,
-            }}
-            whileHover={{ scale: 1.25, rotate: 8 }}
-          >
-            🎒
-          </motion.div></div>
-          
-          <div className="relative h-full flex flex-col justify-center items-center p-6 text-white text-center">
-            <h3 className="text-3xl font-display font-bold">
-              {categories[3].name}
-            </h3>
-            <p className="mt-1 text-slate-200">{categories[3].description}</p>
-          </div>
-        </motion.a>
-
-        {/* --- TARJETA 5: Palwonn (CTA simple) --- */}
-        <motion.a
-          href={`/catalogo?categoria=${categories[4].slug}`}
-          className="group relative lg:col-start-2 lg:row-start-3 lg:col-span-2 rounded-2xl overflow-hidden shadow-xl flex items-center justify-center text-center"
-          variants={cardVariants.card5}
-          transition={transition}
-        >
-          <img
-            src={categories[4].imageUrl}
-            alt={categories[4].name}
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 brightness-50 group-hover:brightness-75"
-          />
-          <motion.div
-            className="absolute top-6 left-6 z-20 text-[2.5rem] drop-shadow-lg select-none"
-            initial={{ scale: 0.7, rotate: -10, opacity: 0 }}
-            animate={{ scale: 1.1, rotate: 0, opacity: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 12,
-              delay: 0.2,
-            }}
-            whileHover={{ scale: 1.25, rotate: 8 }}
-          >
-            🧵
-          </motion.div>
-          <div className="relative p-6 text-white">
-            <h3 className="text-4xl font-display font-bold">
-              {categories[4].name}
-            </h3>
-            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-white/50 rounded-full group-hover:bg-white/10 transition-colors">
-              <span>{categories[4].description}</span>
-              <FiArrowRight />
-            </div>
-          </div>
-        </motion.a>
+        {/* Mapeamos las categorías para crear las tarjetas dinámicamente */}
+        {categories.map((cat) => (
+          <CategoryCard key={cat.slug} category={cat} />
+        ))}
       </motion.div>
     </section>
   );
