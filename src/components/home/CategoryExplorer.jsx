@@ -7,8 +7,15 @@ import category3 from "../../assets/images/category3.jpg";
 import category4 from "../../assets/images/category12.jpg";
 import category5 from "../../assets/images/category13.jpg";
 
-// Datos de las categorías. Reemplaza las imageUrl con imágenes reales de tus categorías.
-// He usado placeholders de Unsplash que evocan la sensación de cada material.
+// Emojis para cada categoría
+const categoryEmojis = [
+  "💎", // Policarbonato
+  "🧵", // Palwonn
+  "💧", // Airza
+  "🛡️", // Alto Impacto
+  "🎒", // Accesorios
+];
+
 const categories = [
   {
     name: "Policarbonato",
@@ -62,13 +69,32 @@ const CategoryExplorer = () => {
     <section className="min-h-screen w-full flex flex-col justify-center bg-slate-50 dark:bg-slate-900 py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
       
       {/* --- Título de la Sección --- */}
-      <div className="w-full max-w-7xl mx-auto text-center mb-12 lg:mb-16">
+      {/* <div className="w-full max-w-7xl mx-auto text-center mb-12 lg:mb-16">
         <h2 className="text-4xl font-display font-bold text-slate-800 dark:text-white sm:text-5xl lg:text-6xl">
           Un Material Para Cada Destino
         </h2>
         <p className="mt-4 max-w-3xl mx-auto text-lg text-slate-600 dark:text-slate-300">
           Diseños que inspiran, materiales que perduran. Descubre tu compañero de viaje ideal.
         </p>
+      </div> */}
+
+      <div className="text-center mb-16">
+        <motion.h2
+          className="text-4xl font-display font-extrabold text-slate-800 dark:text-white sm:text-5xl"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          Explora por Categorías
+        </motion.h2>
+        <motion.p
+          className="mt-4 max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.2 }}
+        >
+          Cada material ofrece una ventaja única. <span className="font-semibold text-primary">¡Descubre el tuyo!</span>
+        </motion.p>
       </div>
 
       {/* --- Contenedor del Collage (CSS GRID) --- */}
