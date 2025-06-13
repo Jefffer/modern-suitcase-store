@@ -2,26 +2,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom'; // Importamos Link para la navegación
-import storesBackground from '../../assets/images/category2.jpg';
+import storesBackground from '../../assets/images/category15.jpg';
 
 const StoresBanner = () => {
   return (
     // El Link envuelve todo, para que cualquier click navegue a la página /sedes
-    <Link to="/sedes" className="block my-20 md:my-28 group">
+    <Link to="/sedes" className="block pb-10 group">
       <motion.div 
-        className="relative w-full max-w-6xl mx-auto h-[500px] flex items-center"
+        className="relative w-full mx-auto h-[500px] flex items-center"
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} // Una curva de ease más dramática
       >
         {/* LADO IZQUIERDO: CONTENIDO DE TEXTO */}
-        <div className="relative z-10 w-full md:w-1/2 h-full flex flex-col justify-center bg-slate-50 dark:bg-slate-900 p-8 lg:p-12">
+        <div className="relative z-10 w-full md:w-1/2 h-full flex flex-col justify-center items-end text-right bg-sky-200 dark:bg-sky-800 p-8 lg:p-12">
           <h2 className="font-display text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-slate-100 leading-tight">
-            Un Espacio Físico Para Tus Aventuras.
+            Un Espacio <span className='text-sky-600 dark:text-sky-400'> Universal </span>
           </h2>
           <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-md">
-            Visítanos, siente la calidad de nuestros materiales y déjate asesorar por expertos en viajes.
+            Visítanos, siente la calidad de nuestros materiales y déjate asesorar por expertos.
           </p>
 
           {/* Botón con el nuevo efecto de hover */}

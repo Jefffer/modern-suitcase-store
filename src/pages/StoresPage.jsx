@@ -71,7 +71,7 @@ const StoresPage = () => {
   const [selectedStore, setSelectedStore] = useState(storesData[0]);
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="bg-slate-100 dark:bg-slate-900">
       {/* Encabezado de la página */}
       <header className="bg-slate-50 dark:bg-slate-800/50 py-16 text-center">
         <motion.h1

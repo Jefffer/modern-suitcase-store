@@ -45,7 +45,7 @@ const ProductList = () => {
   }
 
   return (
-    <section id="catalogo" className="bg-slate-50 dark:bg-slate-900/50 py-20 sm:py-28">
+    <section id="catalogo" className="bg-slate-50 dark:bg-slate-900 py-20 sm:py-28">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-display font-bold text-slate-800 dark:text-white sm:text-5xl">
