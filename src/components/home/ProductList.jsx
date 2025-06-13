@@ -62,7 +62,8 @@ const ProductList = () => {
           initial="hidden"
           animate="visible"
         >
-          {products.map((product) => (
+          {/* .slice(0, 8) para mostrar solo los primeros 8 productos */}
+          {products.slice(0, 4).map((product) => (
             <motion.div key={product._id} variants={itemVariants}>
               <ProductCard product={product} />
             </motion.div>

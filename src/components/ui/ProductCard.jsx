@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="flex flex-col">
-    <div className="relative group h-120 w-full flex flex-col rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out bg-transparent">
+    <div className="relative group h-100 sm:h-120 w-full flex flex-col rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out bg-transparent">
       {/* Contenedor de imagen */}
       <div className="flex-1 flex items-center justify-center bg-white/70 dark:bg-white rounded-t-lg">
         <img 
