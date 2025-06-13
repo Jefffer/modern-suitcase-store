@@ -24,20 +24,6 @@ const categories = [
     imageUrl: category1,
   },
   {
-    name: "Palwonn",
-    slug: "palwonn",
-    description:
-      "Poliéster de alta durabilidad para resistir las aventuras más exigentes.",
-    imageUrl: category2,
-  },
-  {
-    name: "Airza",
-    slug: "airza",
-    description:
-      "Tejido de poliéster impermeable que protege tus pertenencias de la lluvia.",
-    imageUrl: category3,
-  },
-  {
     name: "Alto Impacto",
     slug: "alto-impacto",
     description:
@@ -45,12 +31,26 @@ const categories = [
     imageUrl: category4,
   },
   {
-    name: "Accesorios",
-    slug: "accesorios",
-    description:
-      "Complementos esenciales para tu viaje, desde organizadores hasta etiquetas de equipaje.",
-    imageUrl: category5,
-  },
+      name: "Airza",
+      slug: "airza",
+      description:
+      "Tejido de poliéster impermeable que protege tus pertenencias de la lluvia.",
+      imageUrl: category3,
+    },
+    {
+      name: "Accesorios",
+      slug: "accesorios",
+      description:
+        "Complementos esenciales para tu viaje, desde organizadores hasta etiquetas de equipaje.",
+      imageUrl: category5,
+    },
+    {
+      name: "Palwonn",
+      slug: "palwonn",
+      description:
+        "Poliéster de alta durabilidad para resistir las aventuras más exigentes.",
+      imageUrl: category2,
+    },
 ];
 
 const CategoryExplorer = () => {
@@ -141,25 +141,25 @@ const CategoryExplorer = () => {
 
         {/* --- TARJETA 2: Alto Impacto (Texto afuera, debajo de la imagen) --- */}
         <motion.a
-          href={`/catalogo?categoria=${categories[3].slug}`}
+          href={`/catalogo?categoria=${categories[1].slug}`}
           className="group lg:col-start-3 lg:row-span-2 rounded-2xl overflow-hidden shadow-xl flex flex-col bg-white dark:bg-slate-900"
           variants={cardVariants.card2}
           transition={transition}
         >
           <div className="h-2/3 overflow-hidden">
             <img
-              src={categories[3].imageUrl}
-              alt={categories[3].name}
+              src={categories[1].imageUrl}
+              alt={categories[1].name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           </div>
           
           <div className="h-1/3 p-6 flex flex-col justify-center">
             <h3 className="text-2xl font-display font-bold text-slate-800 dark:text-white">
-              {categories[3].name}
+              {categories[1].name}
             </h3>
             <p className="mt-1 text-slate-600 dark:text-slate-300">
-              {categories[3].description}
+              {categories[1].description}
             </p>
           </div>
         </motion.a>
@@ -189,14 +189,14 @@ const CategoryExplorer = () => {
 
         {/* --- TARJETA 4: ACCESORIOS (Ocupa espacio horizontal) --- */}
         <motion.a
-          href={`/catalogo?categoria=${categories[4].slug}`}
+          href={`/catalogo?categoria=${categories[3].slug}`}
           className="group relative lg:col-span-1 lg:row-start-3 rounded-2xl overflow-hidden shadow-xl"
           variants={cardVariants.card3}
           transition={transition}
         >
           <img
-            src={categories[4].imageUrl}
-            alt={categories[4].name}
+            src={categories[3].imageUrl}
+            alt={categories[3].name}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-125"
           />
           <div className="absolute inset-0 bg-black/60">
@@ -217,22 +217,22 @@ const CategoryExplorer = () => {
           
           <div className="relative h-full flex flex-col justify-center items-center p-6 text-white text-center">
             <h3 className="text-3xl font-display font-bold">
-              {categories[4].name}
+              {categories[3].name}
             </h3>
-            <p className="mt-1 text-slate-200">{categories[4].description}</p>
+            <p className="mt-1 text-slate-200">{categories[3].description}</p>
           </div>
         </motion.a>
 
         {/* --- TARJETA 5: Palwonn (CTA simple) --- */}
         <motion.a
-          href={`/catalogo?categoria=${categories[1].slug}`}
+          href={`/catalogo?categoria=${categories[4].slug}`}
           className="group relative lg:col-start-2 lg:row-start-3 lg:col-span-2 rounded-2xl overflow-hidden shadow-xl flex items-center justify-center text-center"
           variants={cardVariants.card5}
           transition={transition}
         >
           <img
-            src={categories[1].imageUrl}
-            alt={categories[1].name}
+            src={categories[4].imageUrl}
+            alt={categories[4].name}
             className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 brightness-50 group-hover:brightness-75"
           />
           <motion.div
@@ -251,10 +251,10 @@ const CategoryExplorer = () => {
           </motion.div>
           <div className="relative p-6 text-white">
             <h3 className="text-4xl font-display font-bold">
-              {categories[1].name}
+              {categories[4].name}
             </h3>
             <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-white/50 rounded-full group-hover:bg-white/10 transition-colors">
-              <span>{categories[1].description}</span>
+              <span>{categories[4].description}</span>
               <FiArrowRight />
             </div>
           </div>
