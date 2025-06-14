@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { Icon } from "leaflet";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMapPin, FiMail, FiClock } from "react-icons/fi";
 
-// La data de las tiendas ahora vive aquí
+// Coordenadas aproximadas del centro de cada ciudad
 const storesData = [
   {
     city: "Bogotá",
@@ -14,8 +16,7 @@ const storesData = [
       saturday: "11:00 am - 7:00 pm",
       sunday: "11:00 am - 6:00 pm",
     },
-    mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127262.80236894379!2d-74.14849004113955!3d4.648283534574975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bfd2da6cb29%3A0x239d635520a33914!2sBogot%C3%A1!5e0!3m2!1ses!2sco!4v1718301777452!5m2!1ses!2sco",
+    coords: [4.60972, -74.08167], // Centro de Bogotá
   },
   {
     city: "Medellín",
@@ -27,8 +28,7 @@ const storesData = [
       saturday: "10:00 am - 8:00 pm",
       sunday: "11:00 am - 5:00 pm",
     },
-    mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253840.48287515084!2d-75.6764516805118!3d6.223632994848135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428dfb80fad05%3A0x42137cfcc7b53b56!2sMedell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1718301887016!5m2!1ses!2sco",
+    coords: [6.244203, -75.581211], // Centro de Medellín
   },
   {
     city: "Bucaramanga",
@@ -40,40 +40,50 @@ const storesData = [
       saturday: "10:00 am - 6:00 pm",
       sunday: "Cerrado",
     },
-    mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126685.23447551978!2d-73.18432367929428!3d7.125393433892338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e683f1b0a51988d%3A0x696144865f33983d!2sBucaramanga%2C%20Santander!5e0!3m2!1ses!2sco!4v1718301931345!5m2!1ses!2sco",
+    coords: [7.119349, -73.122741], // Centro de Bucaramanga
   },
 ];
 
-// El componente TabButton también vive aquí
-const TabButton = ({ store, isSelected, onSelect }) => {
-  return (
-    <button
-      onClick={onSelect}
-      className="relative w-full p-4 text-left transition"
-    >
-      <span className="relative z-10 font-display text-2xl font-bold">
-        {store.emoji} {store.city}
-      </span>
-      {isSelected && (
-        <motion.div
-          layoutId="activeStoreTab"
-          className="absolute inset-0 bg-primary/20 dark:bg-primary-dark/30 rounded-lg"
-          style={{ borderRadius: 12 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        />
-      )}
-    </button>
-  );
-};
+// Icono personalizado para los pines
+const storeIcon = new Icon({
+  iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+  iconSize: [38, 38],
+  iconAnchor: [19, 38],
+  popupAnchor: [0, -38],
+});
+
+function MapFlyTo({ coords }) {
+  const map = useMap();
+  React.useEffect(() => {
+    if (coords) {
+      map.flyTo(coords, 13, { duration: 1.2 });
+    }
+  }, [coords, map]);
+  return null;
+}
+
+function MapUpdater({ coords }) {
+  const map = useMap();
+  useEffect(() => {
+    if (coords) {
+      map.flyTo(coords, 13, { duration: 1.2 });
+      // Forzamos la actualización del tamaño después de un breve instante
+      // para dar tiempo al DOM a estabilizarse.
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 100);
+    }
+  }, [coords, map]);
+  return null;
+}
 
 const StoresPage = () => {
   const [selectedStore, setSelectedStore] = useState(storesData[0]);
 
   return (
-    <div className="bg-slate-100 dark:bg-slate-900">
-      {/* Encabezado de la página */}
-      <header className="bg-slate-50 dark:bg-slate-800/50 py-16 text-center">
+    <div className="relative min-h-screen pb-10 bg-gradient-to-br from-sky-100 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Encabezado */}
+      <header className="pt-24 pb-8 text-center">
         <motion.h1
           className="text-4xl font-display font-extrabold text-slate-800 dark:text-white sm:text-6xl"
           initial={{ opacity: 0, y: 20 }}
@@ -88,96 +98,131 @@ const StoresPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Encuentra tu tienda más cercana. ¡Te esperamos para asesorarte en tu
-          próxima aventura!
+          Haz clic en el mapa o en las pestañas para ver la información de cada
+          sede.
         </motion.p>
       </header>
 
-      {/* Contenido principal de la página */}
-      <main id="sedes-fisicas" className="py-20 sm:py-24">
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Columna de Pestañas */}
-            <div className="flex flex-col gap-2">
-              {storesData.map((store) => (
-                <TabButton
-                  key={store.city}
-                  store={store}
-                  isSelected={selectedStore.city === store.city}
-                  onSelect={() => setSelectedStore(store)}
-                />
-              ))}
-            </div>
-
-            {/* Columna de Contenido y Mapa */}
-            <div className="lg:col-span-2">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={selectedStore.city}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="bg-slate-50 dark:bg-slate-800/50 p-6 md:p-8 rounded-2xl shadow-lg"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary dark:text-primary-dark mb-2 flex items-center gap-2">
-                          <FiMapPin /> Dirección
-                        </h3>
-                        <p className="text-lg text-slate-700 dark:text-slate-200">
-                          {selectedStore.address}
-                        </p>
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary dark:text-primary-dark mb-2 flex items-center gap-2">
-                          <FiMail /> Correo
-                        </h3>
-                        <p className="text-lg text-slate-700 dark:text-slate-200">
-                          {selectedStore.email}
-                        </p>
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary dark:text-primary-dark mb-2 flex items-center gap-2">
-                          <FiClock /> Horarios
-                        </h3>
-                        <ul className="text-slate-600 dark:text-slate-300 space-y-1">
-                          <li>
-                            <strong>Lunes - Viernes:</strong>{" "}
-                            {selectedStore.hours.weekdays}
-                          </li>
-                          <li>
-                            <strong>Sábado:</strong>{" "}
-                            {selectedStore.hours.saturday}
-                          </li>
-                          <li>
-                            <strong>Domingos y festivos:</strong>{" "}
-                            {selectedStore.hours.sunday}
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* Mapa de Google */}
-                    <div className="w-full h-80 md:h-full rounded-xl overflow-hidden shadow-md border-4 border-white dark:border-slate-700">
-                      <iframe
-                        src={selectedStore.mapSrc}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen=""
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+      {/* Mapa protagonista */}
+      <div
+        className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ height: "70vh" }}
+      >
+        <div className="absolute z-20 left-0 top-0 w-full lg:w-80 flex lg:flex-col gap-2 p-2 lg:p-0">
+          {storesData.map((store) => (
+            <button
+              key={store.city}
+              onClick={() => setSelectedStore(store)}
+              className={`flex-1 lg:flex-none rounded-xl px-4 py-3 font-display text-lg font-bold transition
+                ${
+                  selectedStore.city === store.city
+                    ? "bg-primary/90 text-white shadow-lg scale-105"
+                    : "bg-white/80 dark:bg-slate-800/80 text-slate-800 dark:text-white hover:bg-primary/20"
+                }
+              `}
+              style={{ minWidth: 0 }}
+            >
+              <span className="text-2xl mr-2">{store.emoji}</span>
+              {store.city}
+            </button>
+          ))}
         </div>
-      </main>
+        <div className="w-full h-[70vh] rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 relative z-10">
+          <MapContainer
+            // key={selectedStore.city}
+            center={selectedStore.coords}
+            zoom={13}
+            scrollWheelZoom={true}
+            style={{ width: "100%", height: "100%" }}
+            className="z-0"
+            zoomControl={false}
+          >
+            <TileLayer
+              attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <MapUpdater coords={selectedStore.coords} />
+            {storesData.map((store) => (
+              <Marker
+                key={store.city}
+                position={store.coords}
+                icon={storeIcon}
+                eventHandlers={{
+                  click: () => setSelectedStore(store),
+                }}
+              >
+                <Popup>
+                  <div className="font-display font-bold text-lg mb-1">
+                    {store.emoji} {store.city}
+                  </div>
+                  <div className="text-sm mb-2">{store.address}</div>
+                  {/* ENLACE DE GOOGLE MAPS */}
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${store.coords[0]},${store.coords[1]}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 px-3 py-1 rounded-full bg-sky-100 text-white text-xs font-semibold hover:bg-sky-200 transition"
+                  >
+                    Ver en Google Maps
+                  </a>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        </div>
+        {/* Tarjeta flotante de información */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedStore.city}
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.98 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="absolute right-0 bottom-0 lg:top-0 lg:right-8 w-full lg:w-[370px] bg-white/95 dark:bg-slate-900/95 rounded-2xl shadow-2xl p-6 md:p-8 border-2 border-primary/20 dark:border-primary-dark/30 z-30 backdrop-blur-xl"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-3xl">{selectedStore.emoji}</span>
+              <h2 className="text-2xl font-display font-bold text-primary dark:text-primary-dark">
+                {selectedStore.city}
+              </h2>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-primary dark:text-primary-dark mb-1 flex items-center gap-2">
+                <FiMapPin /> Dirección
+              </h3>
+              <p className="text-base text-slate-700 dark:text-slate-200">
+                {selectedStore.address}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-primary dark:text-primary-dark mb-1 flex items-center gap-2">
+                <FiMail /> Correo
+              </h3>
+              <p className="text-base text-slate-700 dark:text-slate-200">
+                {selectedStore.email}
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-primary dark:text-primary-dark mb-1 flex items-center gap-2">
+                <FiClock /> Horarios
+              </h3>
+              <ul className="text-slate-600 dark:text-slate-300 space-y-1 text-sm">
+                <li>
+                  <strong>Lunes - Viernes:</strong>{" "}
+                  {selectedStore.hours.weekdays}
+                </li>
+                <li>
+                  <strong>Sábado:</strong> {selectedStore.hours.saturday}
+                </li>
+                <li>
+                  <strong>Domingos y festivos:</strong>{" "}
+                  {selectedStore.hours.sunday}
+                </li>
+              </ul>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

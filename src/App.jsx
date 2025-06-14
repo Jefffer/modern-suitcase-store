@@ -4,10 +4,12 @@ import "./App.css";
 import MainLayout from "./components/layouts/MainLayout";
 import HomePage from './pages/HomePage';
 import StoresPage from "./pages/StoresPage";
+import ScrollToTop from "./components/utils/ScrollToTop";
 
 function App() {
   return (
     <MainLayout>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/sedes" element={<StoresPage />} />

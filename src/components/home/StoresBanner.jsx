@@ -16,7 +16,7 @@ const StoresBanner = () => {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} // Una curva de ease más dramática
       >
         {/* LADO IZQUIERDO: CONTENIDO DE TEXTO */}
-        <div className="relative z-10 w-full md:w-1/2 h-full flex flex-col justify-center items-end text-right bg-sky-200 dark:bg-sky-800 p-8 lg:p-12">
+        <div className="relative z-10 w-full md:w-1/2 h-full flex flex-col justify-center items-center text-center bg-sky-200 dark:bg-sky-800 p-8 lg:p-12">
           <h2 className="font-display text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-slate-100 leading-tight">
             Un Espacio <span className='text-sky-600 dark:text-sky-400'> Universal </span>
           </h2>

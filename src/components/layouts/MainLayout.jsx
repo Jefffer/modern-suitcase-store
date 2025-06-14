@@ -23,11 +23,10 @@ const MainLayout = ({ children }) => {
   // }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300">
       <TopBar />
       {/* Pasamos el estado 'isScrolled' al Navbar */}
       <Navbar/>
-      {/* Eliminamos las clases 'container' y 'mx-auto' de aquí */}
       <main className="flex-grow">
         {children}
       </main>

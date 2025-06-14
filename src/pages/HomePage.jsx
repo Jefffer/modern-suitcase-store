@@ -6,7 +6,7 @@ import StoresBanner from '../components/home/StoresBanner';
 
 const HomePage = () => {
   return (
-    <div className='bg-slate-50 dark:bg-slate-900'>
+    <div className=''>
       <HeroSection />
       <ProductList />
       <CategoryExplorer />

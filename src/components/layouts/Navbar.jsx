@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FiShoppingCart, FiSun, FiMoon, FiSearch } from "react-icons/fi";
+import { Link, useLocation } from "react-router-dom";
+import { FiShoppingCart, FiSun, FiMoon, FiSearch, FiMapPin  } from "react-icons/fi";
 import { useTheme } from "../../context/ThemeContext";
 import logo from '../../assets/images/logo.jpg';
 
@@ -21,7 +22,7 @@ const Navbar = () => {
   const positionClasses = isScrolled ? "fixed top-0" : "absolute top-[40px]";
 
   const backgroundClasses = isScrolled
-    ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800"
+    ? "bg-white/90 dark:bg-slate-950/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800"
     : "border-b border-transparent bg-transparent hover:bg-white/90 dark:hover:bg-slate-900/90 hover:backdrop-blur-sm hover:border-slate-200 dark:hover:border-slate-800";
 
   // --- LÓGICA DE COLOR PARA TEXTO Y LOGO ---
@@ -84,7 +85,7 @@ const Navbar = () => {
     >
       <nav className="w-full h-full px-4 sm:px-6 lg:px-8 mx-auto flex justify-between items-center">
         <div className="flex items-center gap-5 h-full">
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             {/* Logo circular */}
             <img 
               src={logo} 
@@ -100,15 +101,17 @@ const Navbar = () => {
                 Universal
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Enlaces de Navegación. 'items-stretch' en el nav padre permite que los hijos ocupen toda la altura */}
-          <div className="hidden md:flex items-center h-full gap-4">
-            <a href="/catalogo" className={`${navLinkBaseClasses} ${navLinkColor} h-full ml-4`}>Catálogo</a>
-            <a href="/ofertas" className={`${navLinkBaseClasses} ${offerLinkColor} h-full`}>Ofertas 🔥</a>
-            <a href="/nosotros" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Nosotros</a>
-            <a href="/contacto" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Contacto</a>
-            <a href="/giftcard" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Giftcard</a>
+          <div className="tracking-wider hidden md:flex items-center h-full gap-4">
+            <Link to="/catalogo" className={`${navLinkBaseClasses} ${navLinkColor} h-full ml-4`}>Catálogo</Link>
+            <Link to="/ofertas" className={`${navLinkBaseClasses} ${offerLinkColor} h-full`}>Ofertas 🔥</Link>
+            <Link to="/nosotros" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Nosotros</Link>
+            <Link to="/sedes" className={`${navLinkBaseClasses} ${navLinkColor} h-full flex items-center gap-1.5`}>
+              <FiMapPin size={16}/> Sedes
+            </Link>
+            <Link to="/contacto" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Contacto</Link>
           </div>
         </div>
 

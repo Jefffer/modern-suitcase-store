@@ -8,7 +8,7 @@ const TopBar = () => {
     "Selecciona tu sede más cercana para ver el catálogo ・ ¡Realizamos envíos en menos de 12 horas después de tu pedido ・ Envío gratis a partir de $200.000 ・ Ofrecemos recogida en bodega completamente gratis ・ Servicio Contraentrega";
 
   return (
-    <div className="bg-emerald-700 dark:bg-emerald-900 text-white transition-colors duration-300 h-[40px] flex items-center justify-between gap-6">
+    <div className="bg-emerald-700 dark:bg-emerald-900 text-white tracking-wider transition-colors duration-300 h-[40px] flex items-center justify-between gap-6">
       {/* GRUPO IZQUIERDO: Iconos de redes sociales */}
       <div className="hidden sm:flex items-center gap-3 shrink-0 pl-4 sm:pl-6 lg:pl-8">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-emerald-200 hover:text-pink-400 hover:scale-160 transition-transform duration-300">
