@@ -90,14 +90,14 @@ const CategoryCard = ({ category }) => (
         {category.emoji}
       </motion.div>
       
-      <h3 className="text-3xl font-display font-bold leading-tight tracking-tight">
+      <h3 className="text-3xl font-display font-bold leading-tight tracking-wide">
         {category.name}
       </h3>
       <p className="text-lg text-slate-200/95 mt-1 max-w-xs">{category.description}</p>
       
       {/* Indicador 'Explorar' que aparece en hover */}
       <div className="mt-4 flex items-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <span className="font-semibold">Explorar</span>
+        <span className="font-semibold tracking-wide">Explorar</span>
         <FiArrowRight />
       </div>
     </div>
@@ -106,7 +106,7 @@ const CategoryCard = ({ category }) => (
 
 const CategoryExplorer = () => {
   return (
-    <section className="min-h-screen w-full flex flex-col justify-center bg-slate-50 dark:bg-slate-900 py-20 px-4 sm:px-6 lg:px-8">
+    <section className="tracking-widermin-h-screen w-full flex flex-col justify-center bg-slate-50 dark:bg-slate-900 py-20 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16 max-w-3xl mx-auto">
         <motion.h2
           className="text-4xl font-display font-extrabold text-slate-800 dark:text-white sm:text-5xl"

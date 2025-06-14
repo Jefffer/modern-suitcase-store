@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import { motion, AnimatePresence } from "framer-motion";
@@ -66,7 +66,7 @@ function MapUpdater({ coords }) {
   const map = useMap();
   useEffect(() => {
     if (coords) {
-      map.flyTo(coords, 13, { duration: 1.2 });
+      map.flyTo(coords, 15, { duration: 2 });
       // Forzamos la actualización del tamaño después de un breve instante
       // para dar tiempo al DOM a estabilizarse.
       setTimeout(() => {
@@ -79,9 +79,30 @@ function MapUpdater({ coords }) {
 
 const StoresPage = () => {
   const [selectedStore, setSelectedStore] = useState(storesData[0]);
+  const markerRefs = useRef({});
+
+  // Abrir el popup del marcador seleccionado cuando cambia selectedStore
+  useEffect(() => {
+    const ref = markerRefs.current[selectedStore.city];
+    if (ref && ref.openPopup) {
+      ref.openPopup();
+    }
+  }, [selectedStore]);
+
+  // Abrir el popup de Bogotá al montar el componente (cuando el ref esté disponible)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const ref = markerRefs.current["Bogotá"];
+      if (ref && ref.openPopup) {
+        ref.openPopup();
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="relative min-h-screen pb-10 bg-gradient-to-br from-sky-100 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="relative min-h-screen pb-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-sky-100 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Encabezado */}
       <header className="pt-24 pb-8 text-center">
         <motion.h1
@@ -127,11 +148,11 @@ const StoresPage = () => {
             </button>
           ))}
         </div>
-        <div className="w-full h-[70vh] rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 relative z-10">
+        <div className="w-full h-[70vh] rounded-3xl overflow-hidden border-4 border-white dark:border-slate-800 relative z-10">
           <MapContainer
             // key={selectedStore.city}
             center={selectedStore.coords}
-            zoom={13}
+            zoom={15}
             scrollWheelZoom={true}
             style={{ width: "100%", height: "100%" }}
             className="z-0"
@@ -150,10 +171,14 @@ const StoresPage = () => {
                 eventHandlers={{
                   click: () => setSelectedStore(store),
                 }}
+                // Guardar la ref del marcador
+                ref={(ref) => {
+                  if (ref) markerRefs.current[store.city] = ref;
+                }}
               >
                 <Popup>
                   <div className="font-display font-bold text-lg mb-1">
-                    {store.emoji} {store.city}
+                    Sede {store.city}
                   </div>
                   <div className="text-sm mb-2">{store.address}</div>
                   {/* ENLACE DE GOOGLE MAPS */}
