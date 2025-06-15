@@ -3,6 +3,7 @@ import TopBar from './TopBar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppButton from '../ui/WhatsAppButton';
+import CartSidebar from '../cart/CartSidebar';
 
 const MainLayout = ({ children }) => {
   // const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +33,7 @@ const MainLayout = ({ children }) => {
       </main>
       <Footer />
       <WhatsAppButton />
+      <CartSidebar /> 
     </div>
   );
 };

@@ -3,9 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { FiShoppingCart, FiSun, FiMoon, FiSearch, FiMapPin  } from "react-icons/fi";
 import { useTheme } from "../../context/ThemeContext";
 import logo from '../../assets/images/logo.jpg';
+import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const { cartCount, toggleCart } = useCart(); 
+
   const itemCount = 0;
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -144,10 +147,10 @@ const Navbar = () => {
               className={`relative p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-300 ${iconColor}`}
               title="Ver Carrito de compras"
             >
-              <FiShoppingCart size={22} />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 block h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
-                  {itemCount}
+               <FiShoppingCart size={22} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 block h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center animate-pulse">
+                  {cartCount}
                 </span>
               )}
             </button>
