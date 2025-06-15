@@ -110,11 +110,12 @@ const Navbar = () => {
           <div className="tracking-wider hidden md:flex items-center h-full gap-4">
             <Link to="/catalogo" className={`${navLinkBaseClasses} ${navLinkColor} h-full ml-4`}>Catálogo</Link>
             <Link to="/ofertas" className={`${navLinkBaseClasses} ${offerLinkColor} h-full`}>Ofertas 🔥</Link>
-            <Link to="/nosotros" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Nosotros</Link>
+            <Link to="/giftcard" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Giftcard</Link>
             <Link to="/sedes" className={`${navLinkBaseClasses} ${navLinkColor} h-full flex items-center gap-1.5`}>
               <FiMapPin size={16}/> Sedes
             </Link>
             <Link to="/contacto" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Contacto</Link>
+            <Link to="/nosotros" className={`${navLinkBaseClasses} ${navLinkColor} h-full`}>Nosotros</Link>
           </div>
         </div>
 

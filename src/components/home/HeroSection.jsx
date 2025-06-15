@@ -38,7 +38,7 @@ const HeroSection = () => {
           Descubre maletas diseñadas para durar, con el estilo que te define. Calidad y diseño en cada viaje.
         </p>
         <a 
-          href="#catalogo"
+          href="/catalogo"
           className="mt-8 inline-flex tracking-wider items-center gap-2 bg-primary-light hover:bg-primary text-white font-bold text-lg px-8 py-3 rounded-full transition-transform duration-300 hover:scale-105"
         >
           Ver Catálogo

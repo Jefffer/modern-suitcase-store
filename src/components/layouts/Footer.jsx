@@ -34,9 +34,10 @@ const Footer = () => {
             <div className="flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-300">
               <a href="/catalogo" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Catálogo</a>
               <a href="/ofertas" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Ofertas</a>
-              <a href="/nosotros" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Nosotros</a>
-              <a href="/contacto" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Contacto</a>
               <a href="/giftcard" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Giftcard</a>
+              <a href="/sedes" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Sedes</a>
+              <a href="/contacto" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Contacto</a>
+              <a href="/nosotros" className="hover:text-primary dark:hover:text-primary-dark transition-colors">Nosotros</a>
             </div>
           </div>
 
