@@ -12,7 +12,7 @@ const ProductList = () => {
     sanityClient.fetch(`*[_type == "product"]{
       _id,
       name,
-      slug,
+      "slug": slug.current,
       price,
       color,
       size,
